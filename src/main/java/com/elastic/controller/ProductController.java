@@ -44,12 +44,12 @@ public class ProductController {
     @GetMapping("/matchAllProducts/{fieldValue}")
     public List<Product> matchAllProductsWithName(@PathVariable String fieldValue) throws IOException {
         SearchResponse<Product> searchResponse =  productService.matchProductsWithName(fieldValue);
-        System.out.println(searchResponse.hits().hits().toString());
-
         List<Hit<Product>> listOfHits= searchResponse.hits().hits();
         List<Product> listOfProducts  = new ArrayList<>();
         for(Hit<Product> hit : listOfHits){
-            listOfProducts.add(hit.source());
+            Product source = hit.source();
+            source.setId(hit.id());
+            listOfProducts.add(source);
         }
         return listOfProducts;
     }
@@ -60,7 +60,9 @@ public class ProductController {
         List<Hit<Product>> listOfHits= searchResponse.hits().hits();
         List<Product> listOfProducts  = new ArrayList<>();
         for(Hit<Product> hit : listOfHits){
-            listOfProducts.add(hit.source());
+            Product source = hit.source();
+            source.setId(hit.id());
+            listOfProducts.add(source);
         }
         return listOfProducts;
     }
@@ -71,9 +73,15 @@ public class ProductController {
         System.out.println(hitList);
         List<Product> productList = new ArrayList<>();
         for(Hit<Product> hit :hitList){
-            productList.add(hit.source());
+            Product source = hit.source();
+            source.setId(hit.id());
+            productList.add(source);
         }
         return productList;
+    }
+    @GetMapping("/search")
+    public List<Product> searchAllFields(@RequestParam String query) {
+        return productService.searchAllFields(query);
     }
 
 }

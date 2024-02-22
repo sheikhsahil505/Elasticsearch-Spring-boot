@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.function.Supplier;
 
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 
@@ -57,9 +59,7 @@ public class ProductService {
 
     public SearchResponse<Product> matchProductsWithName(String fieldValue) throws IOException {
         Supplier<Query> supplier = ElasticSearchUtil.supplierWithNameField(fieldValue);
-        System.out.println(supplier.get().toString());
         SearchResponse<Product> searchResponse = elasticsearchClient.search(s -> s.index("products").query(supplier.get()), Product.class);
-        System.out.println("elasticsearch query is " + supplier.get().toString());
         return searchResponse;
     }
 
@@ -70,11 +70,15 @@ public class ProductService {
 
 
     public SearchResponse<Product> fuzzySearch(String approximateProductName) throws IOException {
-        Supplier<Query>  supplier = ElasticSearchUtil.createSupplierQuery(approximateProductName);
+        Supplier<Query> supplier = ElasticSearchUtil.createSupplierQuery(approximateProductName);
         SearchResponse<Product> response = elasticsearchClient
-                .search(s->s.index("products").query(supplier.get()),Product.class);
-        System.out.println("elasticsearch supplier fuzzy query "+supplier.get().toString());
+                .search(s -> s.index("products").query(supplier.get()), Product.class);
         return response;
+    }
+
+
+    public List<Product> searchAllFields(String query) {
+        return productRepository.searchAllFields(query);
     }
 }
 
