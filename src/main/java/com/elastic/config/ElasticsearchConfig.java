@@ -62,11 +62,7 @@ public class ElasticsearchConfig extends ElasticsearchConfiguration {
                     .usingSsl(sslContext)
                     .withBasicAuth("elastic","*3sWerEu*gfYaejGbOEp")
                     .build();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (KeyStoreException e) {
-            throw new RuntimeException(e);
-        } catch (KeyManagementException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

@@ -1,13 +1,12 @@
 package com.elastic.util;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.FuzzyQuery;
-import co.elastic.clients.elasticsearch._types.query_dsl.MatchAllQuery;
-import co.elastic.clients.elasticsearch._types.query_dsl.MatchQuery;
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import lombok.val;
 
+import java.util.List;
 import java.util.function.Supplier;
-
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.MatchQueryBuilder;
 public class ElasticSearchUtil {
 
     public static Supplier<Query> supplier(){
@@ -32,6 +31,7 @@ public class ElasticSearchUtil {
     private static MatchQuery matchQueryWithNameField(String fieldValue){
         val  matchQuery = new MatchQuery.Builder();
         return matchQuery.field("name").query(fieldValue).build();
+
     }
 
     private static MatchQuery searchQueryWithFieldAndNAme(String fieldValue,String fieldName){
@@ -43,12 +43,19 @@ public class ElasticSearchUtil {
         Supplier<Query> supplier = ()->Query.of(q->q.fuzzy(createFuzzyQuery(approximateProductName)));
         return  supplier;
     }
-
-
     public static FuzzyQuery createFuzzyQuery(String approximateProductName){
         val fuzzyQuery  = new FuzzyQuery.Builder();
         return  fuzzyQuery.field("name").value(approximateProductName).build();
 
     }
+    public static Supplier<Query>  supplierQueryForMultiMatchQuery(String key , List<String> fields){
+        Supplier<Query> supplier = ()->Query.of(q->q.multiMatch(multiMatchQuery(key, fields)));
+        return supplier;
+    }
+    private static MultiMatchQuery multiMatchQuery(String key , List<String> fields ){
+        val multimatch = new MultiMatchQuery.Builder();
+        return   multimatch.query(key).fields(fields).build();
+    }
+
 
 }
