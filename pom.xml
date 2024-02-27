@@ -48,7 +48,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>com.elastic</groupId>
+            <artifactId>elasticsearch-spring-boot</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

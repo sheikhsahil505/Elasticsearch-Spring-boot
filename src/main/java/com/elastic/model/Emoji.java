@@ -1,23 +1,23 @@
 package com.elastic.model;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
-
 @Data
-@Document(indexName = "products" ,createIndex = true)
+@Document(indexName = "emojis" ,createIndex = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ToString
-//@Mapping(mappingPath = "static/author.json")
-public class Product {
+public class Emoji {
     @Id
     private String id;
-    @Field(type = FieldType.Keyword, name = "name")
+    private String emoji;
     private String name;
-    private String description;
-    private double price;
+    private String shortname;
+    private String unicode;
+    private String html;
     private String category;
+    private String order;
+
 }
