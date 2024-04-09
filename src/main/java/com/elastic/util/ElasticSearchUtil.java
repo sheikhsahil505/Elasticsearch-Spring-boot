@@ -5,8 +5,6 @@ import lombok.val;
 
 import java.util.List;
 import java.util.function.Supplier;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.MatchQueryBuilder;
 public class ElasticSearchUtil {
 
     public static Supplier<Query> supplier(){
@@ -53,8 +51,7 @@ public class ElasticSearchUtil {
         return supplier;
     }
     private static MultiMatchQuery multiMatchQuery(String key , List<String> fields ){
-        val multimatch = new MultiMatchQuery.Builder();
-        return   multimatch.query(key).fields(fields).build();
+        return new MultiMatchQuery.Builder().query(key).fields(fields).build();
     }
 
 

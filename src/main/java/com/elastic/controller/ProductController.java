@@ -3,6 +3,8 @@ import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import com.elastic.model.Product;
 import com.elastic.service.ProductService;
+import com.elastic.service.serviceImpl.ProductServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +15,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
+@Slf4j
 public class ProductController {
-
     @Autowired
     private ProductService productService;
 
@@ -29,6 +31,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public Optional<Product> getProductById(@PathVariable String id) {
+        log.info("user get by id : "+id);
         return productService.findById(id);
     }
 
@@ -70,7 +73,6 @@ public class ProductController {
     List<Product> fuzzySearch( @PathVariable String approximateProductName ) throws IOException {
         SearchResponse<Product> searchResponse = productService.fuzzySearch(approximateProductName);
         List<Hit<Product>> hitList = searchResponse.hits().hits();
-        System.out.println(hitList);
         List<Product> productList = new ArrayList<>();
         for(Hit<Product> hit :hitList){
             Product source = hit.source();

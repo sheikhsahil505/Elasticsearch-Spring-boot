@@ -3,8 +3,7 @@ package com.elastic.controller;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import com.elastic.model.Emoji;
-import com.elastic.model.Product;
-import com.elastic.service.EmojiService;
+import com.elastic.service.serviceImpl.EmojiServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EmojiController {
     @Autowired
-    private EmojiService emojiService;
+    private EmojiServiceImpl emojiService;
 
     @PostMapping
     public Iterable<Emoji> saveEmojis(@RequestBody List<Emoji> emojis) {

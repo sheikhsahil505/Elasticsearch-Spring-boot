@@ -58,9 +58,9 @@ public class ElasticsearchConfig extends ElasticsearchConfiguration {
                     .loadTrustMaterial(null, (x509Certificates, s) -> true);
             final SSLContext sslContext = sslBuilder.build();
             return ClientConfiguration.builder()
-                    .connectedTo("localhost:9200")
+                    .connectedTo(host+port)
                     .usingSsl(sslContext)
-                    .withBasicAuth("elastic","*3sWerEu*gfYaejGbOEp")
+                    .withBasicAuth(username,password)
                     .build();
         } catch (Exception e) {
             throw new RuntimeException(e);

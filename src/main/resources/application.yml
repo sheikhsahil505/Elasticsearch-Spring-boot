@@ -1,0 +1,7 @@
+#logging:
+#  level:
+#    com.elastic: INFO
+#    org.springframework.web: INFO
+#  file: /home/root438/Downloads/Sahil/elastic/elasticsearch-spring-boot/src/main/resources/logs/elk-stack.log
+#  pattern:
+#    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%"

@@ -7,6 +7,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.util.List;
+
 @Data
 @Document(indexName = "products" ,createIndex = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -19,5 +21,5 @@ public class Product {
     private String name;
     private String description;
     private double price;
-    private String category;
+    private List<String> category;
 }
